@@ -156,6 +156,8 @@ class NLIScorer(SimilarityScorer):
             print("Question No. - ", i + 1)
         response_probabilities = self._compute_response_probabilities(logprobs_results=logprobs_results, num_responses=len(candidates))
         clustered_responses, cluster_probabilities, nli_scores = self._cluster_responses(responses=candidates, response_probabilities=response_probabilities)
+        print(f"clustered_responses: {clustered_responses}")
+        print(f"cluster_probabilities: {cluster_probabilities}")
         best_response = clustered_responses[cluster_probabilities.index(max(cluster_probabilities))][0]
         semantic_negentropy = self._compute_semantic_entropy(cluster_probabilities=cluster_probabilities)
         return (best_response, semantic_negentropy, nli_scores)
@@ -169,6 +171,7 @@ class NLIScorer(SimilarityScorer):
     @staticmethod
     def avg_logprob(logprobs: List[Dict[str, Any]]) -> float:
         "Compute average logprob"
+        print(f"logprobs: {logprobs}")
         return np.mean([np.exp(d["logprob"]) for d in logprobs])
 
     def _get_nli_results(self, response1: str, response2: str) -> Dict[str, Any]:
