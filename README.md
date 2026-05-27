@@ -318,6 +318,24 @@ Above `response` and `entailment` reflect the original response and response-lev
 *   Graph-based scorers ([Jiang et al., 2024](https://arxiv.org/abs/2410.20783))
 *   Generalized long-form semantic entropy ([Farquhar et al., 2024](https://www.nature.com/articles/s41586-024-07421-0))
 
+## Use with Claude Code
+If you're building agentic frameworks (LangGraph, LangChain, AutoGen, CrewAI, or hand-rolled) inside [Claude Code](https://www.anthropic.com/claude-code), install the bundled skill to make Claude Code an expert at adding `uqlm` to your agents. Once installed, Claude Code will pick the right scorer for your use case, wire it into your graph correctly, and recommend a starting threshold — just ask things like *"add hallucination detection to this agent"* or *"score the responses my agent generates and retry on low confidence"*.
+
+**Install (user-level — applies to every project):**
+```bash
+mkdir -p ~/.claude/skills/uqlm ~/.claude/commands
+curl -fsSL https://raw.githubusercontent.com/cvs-health/uqlm/develop/uqlm/integration/claudecode/SKILL.md \
+  > ~/.claude/skills/uqlm/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/cvs-health/uqlm/develop/uqlm/integration/claudecode/uqlm.md \
+  > ~/.claude/commands/uqlm.md
+```
+
+**Install (project-level — single repo, shareable via git):** run the same commands from your project root with `.claude/...` instead of `~/.claude/...`.
+
+**Verify:** in a fresh Claude Code session run `/help` (the `uqlm` skill should be listed) or simply ask *"add uqlm hallucination detection to my agent"*. The skill auto-loads when relevant. You can also invoke it explicitly with the `/uqlm` slash command.
+
+See [`uqlm/integration/claudecode/README.md`](uqlm/integration/claudecode/README.md) for full install options, project-level setup, and uninstall instructions.
+
 ## Documentation
 Check out our [documentation site](https://cvs-health.github.io/uqlm/latest/index.html) for detailed instructions on using this package, including API reference and more.
 
